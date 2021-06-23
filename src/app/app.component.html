@@ -1,35 +1,53 @@
 <h1>{{ title }}</h1>
+<button (click)="switchView()">{{ switchButton }}</button>
+<ng-container *ngIf="flagVisible; then showTasks; else showDoneTasks">
+</ng-container>
+<ng-template #showTasks>
+  <section class="addingWrapper">
+    <form class="form">
+      <label
+        >task:
+        <input
+          type="text"
+          class="taskName"
+          [(ngModel)]="taskName"
+          name="taskName"
+        />
+      </label>
+      <label
+        >date:
+        <input
+          type="date"
+          class="taskDate"
+          [(ngModel)]="taskDate"
+          name="taskDate"
+        />
+      </label>
+      <input type="button" value="add" (click)="createTask()" />
+    </form>
+  </section>
 
-<section class="addingWrapper">
-  <form class="form">
-    <label
-      >task:
-      <input
-        type="text"
-        class="taskName"
-        [(ngModel)]="taskName"
-        name="taskName"
-      />
-    </label>
-    <label
-      >date:
-      <input
-        type="date"
-        class="taskDate"
-        [(ngModel)]="taskDate"
-        name="taskDate"
-      />
-    </label>
-    <input type="button" value="add" (click)="createTask()" />
-  </form>
-</section>
-
-<section class="tasksWrapper">
-  <ul class="taskList" *ngFor="let task of taskList">
-    <li class="taskElement">
-      {{ task.name }} - {{ task.date }}
-      <button (click)="clearTask(task)">Remove</button>
-      <button (click)="doneTask(task)">Done</button>
-    </li>
+  <section class="tasksWrapper">
+    <ul class="taskList" *ngFor="let task of taskList; index as index">
+      <ng-container [ngSwitch]="task.done">
+        <li class="taskElement" *ngSwitchCase="false">
+          {{ index + 1 }}. {{ task.name }} - {{ task.date }}
+          <button (click)="clearTask(task)">Remove</button>
+          <button (click)="doneTask(task)">Done</button>
+        </li>
+        <li
+          class="taskElement taskDone"
+          style="color: grey"
+          *ngSwitchCase="true"
+        >
+          {{ task.name }}
+        </li>
+      </ng-container>
+    </ul>
+  </section>
+</ng-template>
+<ng-template #showDoneTasks>
+  <ul *ngFor="let task of clearedTaskList">
+    <li>{{ task.name }}</li>
   </ul>
-</section>
+</ng-template>
