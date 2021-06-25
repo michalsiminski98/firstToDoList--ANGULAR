@@ -24,7 +24,7 @@
   </section>
 </ng-template>
 <ng-template #showDoneTasks>
-  <ul *ngFor="let task of clearedTaskList">
-    <li>{{ task.name }}</li>
-  </ul>
+  <app-canceled-tasks-list
+    [clearedTaskList]="clearedTaskList"
+  ></app-canceled-tasks-list>
 </ng-template>
