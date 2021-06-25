@@ -8,36 +8,16 @@ import { Task } from './interfaces';
 export class AppComponent {
   title = 'Todo List Michał Simiński';
 
-  taskName: string = '';
-  taskDate: string = '';
   flagVisible = true;
   switchButton = 'Show cleared tasks';
 
   taskList: Task[] = [];
   clearedTaskList: Task[] = [];
 
-  private clearInputs() {
-    this.taskName = '';
-    this.taskDate = '';
-  }
-
   private sortTasks() {
     this.taskList = this.taskList.sort((a: Task, b: Task) =>
       a.done === b.done ? 0 : a.done ? 1 : -1
     );
-  }
-
-  createTask() {
-    if (this.taskName !== '' && this.taskDate !== '') {
-      let newTask: Task = {
-        name: this.taskName,
-        date: this.taskDate,
-        done: false,
-      };
-      this.clearInputs();
-      this.taskList.push(newTask);
-      this.sortTasks();
-    }
   }
 
   clearTask(task: Task) {
@@ -55,5 +35,15 @@ export class AppComponent {
       ? (this.switchButton = 'Add more tasks')
       : (this.switchButton = 'Show cleared tasks');
     this.flagVisible = !this.flagVisible;
+  }
+
+  onCreateTask(data: { taskName: string; taskDate: string }) {
+    let newTask: Task = {
+      name: data.taskName,
+      date: data.taskDate,
+      done: false,
+    };
+    this.taskList.push(newTask);
+    this.sortTasks();
   }
 }

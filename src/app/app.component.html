@@ -1,32 +1,9 @@
 <h1>{{ title }}</h1>
 <button (click)="switchView()">{{ switchButton }}</button>
+<app-add-form (addTask)="onCreateTask($event)"></app-add-form>
 <ng-container *ngIf="flagVisible; then showTasks; else showDoneTasks">
 </ng-container>
 <ng-template #showTasks>
-  <section class="addingWrapper">
-    <form class="form">
-      <label
-        >task:
-        <input
-          type="text"
-          class="taskName"
-          [(ngModel)]="taskName"
-          name="taskName"
-        />
-      </label>
-      <label
-        >date:
-        <input
-          type="date"
-          class="taskDate"
-          [(ngModel)]="taskDate"
-          name="taskDate"
-        />
-      </label>
-      <input type="button" value="add" (click)="createTask()" />
-    </form>
-  </section>
-
   <section class="tasksWrapper">
     <ul class="taskList" *ngFor="let task of taskList; index as index">
       <ng-container [ngSwitch]="task.done">

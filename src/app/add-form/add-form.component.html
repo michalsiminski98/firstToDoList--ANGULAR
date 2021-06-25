@@ -1,0 +1,27 @@
+<section class="addingWrapper">
+  <form class="form">
+    <label
+      >task:
+      <input
+        type="text"
+        class="taskName"
+        [(ngModel)]="taskName"
+        name="taskName"
+      />
+    </label>
+    <label
+      >date:
+      <input
+        type="date"
+        class="taskDate"
+        [(ngModel)]="taskDate"
+        name="taskDate"
+      />
+    </label>
+    <input
+      type="button"
+      value="add"
+      (click)="sendAddTask(taskName, taskDate)"
+    />
+  </form>
+</section>
