@@ -1,0 +1,14 @@
+<section class="tasksWrapper">
+  <ul class="taskList" *ngFor="let task of taskList; index as index">
+    <ng-container [ngSwitch]="task.done">
+      <li class="taskElement" *ngSwitchCase="false">
+        {{ index + 1 }}. {{ task.name }} - {{ task.date }}
+        <button (click)="clearTask.emit(task)">Remove</button>
+        <button (click)="doneTask.emit(task)">Done</button>
+      </li>
+      <li class="taskElement taskDone" style="color: grey" *ngSwitchCase="true">
+        {{ task.name }}
+      </li>
+    </ng-container>
+  </ul>
+</section>

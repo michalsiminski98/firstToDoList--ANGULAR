@@ -4,24 +4,11 @@
 <ng-container *ngIf="flagVisible; then showTasks; else showDoneTasks">
 </ng-container>
 <ng-template #showTasks>
-  <section class="tasksWrapper">
-    <ul class="taskList" *ngFor="let task of taskList; index as index">
-      <ng-container [ngSwitch]="task.done">
-        <li class="taskElement" *ngSwitchCase="false">
-          {{ index + 1 }}. {{ task.name }} - {{ task.date }}
-          <button (click)="clearTask(task)">Remove</button>
-          <button (click)="doneTask(task)">Done</button>
-        </li>
-        <li
-          class="taskElement taskDone"
-          style="color: grey"
-          *ngSwitchCase="true"
-        >
-          {{ task.name }}
-        </li>
-      </ng-container>
-    </ul>
-  </section>
+  <app-tasks-list
+    [taskList]="taskList"
+    (clearTask)="clearTask($event)"
+    (doneTask)="doneTask($event)"
+  ></app-tasks-list>
 </ng-template>
 <ng-template #showDoneTasks>
   <app-canceled-tasks-list
